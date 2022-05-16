@@ -1,4 +1,4 @@
-import { CustomAPIError } from '../errors';
+import CustomAPIError from '../errors/custom-api.js';
 import { StatusCodes } from 'http-status-codes';
 
 
