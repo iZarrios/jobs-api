@@ -1,2 +1,2 @@
 # what is this repository?
-This is a job API using **Express, MongoDB and NodeJS**.
+This is a jobs API using **Express, MongoDB and NodeJS**.
