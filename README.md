@@ -1,5 +1,5 @@
-# what is this repository?
-This is a jobs API using **Express, MongoDB and NodeJS**.
+# What is this repository?
+This is a jobs API using **Express, MongoDB and NodeJS** as well as other useful tools.
 
 
 ## Getting Started
