@@ -10,6 +10,7 @@ import jobRouter from './routes/jobs.js';
 // local error handler
 import notFoundErrorMiddleware from './middleware/not-found.js';
 import errorHandlerMiddleware from './middleware/error-handler.js';
+import autheticateUserMiddleware from './middleware/authentication.js';
 //enivorment variables
 
 dotenv.config();
@@ -38,7 +39,7 @@ const startServer = async() => {
 };
 
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/jobs/:id', jobRouter);
+app.use('/api/v1/jobs/', autheticateUserMiddleware, jobRouter);
 
 app.use(notFoundErrorMiddleware);
 app.use(errorHandlerMiddleware);

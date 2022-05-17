@@ -37,6 +37,12 @@ UserSchema.methods.createJWT = function() {
     );
 };
 
+UserSchema.methods.comparePassword = async function(candidatePassword) {
+    // const salt = await bcrypt.genSalt();
+    // hashedPassword = await bcrypt.hash(candidatePassword, salt);
+    return bcrypt.compare(candidatePassword, this.password);
+};
+
 const User = mongoose.model('User', UserSchema);
 
 export default User;
