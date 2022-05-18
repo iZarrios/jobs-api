@@ -16,8 +16,11 @@ import jobRouter from './routes/jobs.js';
 import notFoundErrorMiddleware from './middleware/not-found.js';
 import errorHandlerMiddleware from './middleware/error-handler.js';
 import autheticateUserMiddleware from './middleware/authentication.js';
-//enivorment variables
+// Swagger
+import swagegrUI from 'swagger-ui-express';
+import YAML from 'yamljs';
 
+//enivorment variables
 dotenv.config();
 const MONGO_URI = process.env.MONGO_URI;
 const port = process.env.PORT || 3000;
@@ -27,10 +30,10 @@ const app = express();
 //json parsing
 app.set('trust proxy', 1);
 app.use(
-	rateLimiter({
-		windowMs: 15 * 60 * 1000, // 15 minutes
-		max: 1000, // 100 request per 15 minutes
-	})
+    rateLimiter({
+        windowMs: 15 * 60 * 1000, // 15 minutes
+        max: 1000, // 100 request per 15 minutes
+    })
 );
 
 app.use(express.json());
@@ -38,22 +41,24 @@ app.use(cors());
 app.use(helmet());
 app.use(xss());
 
-const startServer = async () => {
-	try {
-		await connectDB(MONGO_URI);
-		app.listen(port, () => {
-			console.log(`connected to http://localhost:${port}`);
-		});
-	} catch (error) {
-		console.log(error);
-	}
+const startServer = async() => {
+    try {
+        await connectDB(MONGO_URI);
+        app.listen(port, () => {
+            console.log(`connected to http://localhost:${port}`);
+        });
+    } catch (error) {
+        console.log(error);
+    }
 };
 
+const swaggerDoc = YAML.load('./swagger.yaml');
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 //routing
 app.get('/', (req, res) => {
-	res.send('<h1>Jobs API</h1><a href="/api-docs">Documentation</a>');
+    res.send('<h1>Jobs API</h1><a href="/api-docs">Documentation</a>');
 });
-app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/auth/', authRouter);
 app.use('/api/v1/jobs/', autheticateUserMiddleware, jobRouter);
 
 app.use(notFoundErrorMiddleware);

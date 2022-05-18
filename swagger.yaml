@@ -1,0 +1,431 @@
+openapi: 3.0.0
+
+info:
+
+  title: Jobs Api
+
+  contact: {}
+
+  version: '1.0'
+
+servers:
+
+- url: https://jobs-api-heroku-06.herokuapp.com/
+
+  variables: {}
+
+paths:
+
+  /auth/register:
+
+    post:
+
+      tags:
+
+      - Auth
+
+      summary: Create User
+
+      operationId: CreateUser
+
+      parameters: []
+
+      requestBody:
+
+        description: ''
+
+        content:
+
+          application/json:
+
+            schema:
+
+              $ref: '#/components/schemas/CreateUserRequest'
+
+            example:
+
+              name: peter
+
+              email: peter@yahoo.com
+
+              password: peter123
+
+        required: true
+
+      responses:
+
+        '200':
+
+          description: ''
+
+          headers: {}
+
+      deprecated: false
+
+      security: []
+
+  /auth/login:
+
+    post:
+
+      tags:
+
+      - Auth
+
+      summary: Login User
+
+      operationId: LoginUser
+
+      parameters: []
+
+      requestBody:
+
+        description: ''
+
+        content:
+
+          application/json:
+
+            schema:
+
+              $ref: '#/components/schemas/LoginUserRequest'
+
+            example:
+
+              email: name123@g.com
+
+              password: name123
+
+        required: true
+
+      responses:
+
+        '200':
+
+          description: ''
+
+          headers: {}
+
+      deprecated: false
+
+      security: []
+
+  /jobs:
+
+    post:
+
+      tags:
+
+      - Jobs
+
+      summary: Create Job
+
+      operationId: CreateJob
+
+      parameters: []
+
+      requestBody:
+
+        description: ''
+
+        content:
+
+          application/json:
+
+            schema:
+
+              $ref: '#/components/schemas/CreateJobRequest'
+
+            example:
+
+              company: peter 2
+
+              position: peter 2
+
+        required: true
+
+      responses:
+
+        '200':
+
+          description: ''
+
+          headers: {}
+
+      deprecated: false
+
+      security:
+
+      - bearer: []
+
+    get:
+
+      tags:
+
+      - Jobs
+
+      summary: Get All Jobs
+
+      operationId: GetAllJobs
+
+      parameters: []
+
+      responses:
+
+        '200':
+
+          description: ''
+
+          headers: {}
+
+      deprecated: false
+
+      security:
+
+      - bearer: []
+
+  /jobs/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: the job id
+    get:
+
+      tags:
+
+      - Jobs
+
+      summary: Get A Job
+
+      operationId: GetAJob
+
+      parameters: []
+
+      responses:
+
+        '200':
+
+          description: ''
+
+          headers: {}
+
+      deprecated: false
+
+      security:
+
+      - bearer: []
+
+    patch:
+
+      tags:
+
+      - Jobs
+
+      summary: Update A Job
+
+      operationId: UpdateAJob
+
+      parameters: []
+
+      requestBody:
+
+        description: ''
+
+        content:
+
+          application/json:
+
+            schema:
+
+              $ref: '#/components/schemas/UpdateAJobRequest'
+
+            example:
+
+              company: peter 3 after patch
+
+        required: true
+
+      responses:
+
+        '200':
+
+          description: ''
+
+          headers: {}
+
+      deprecated: false
+
+      security:
+
+      - bearer: []
+
+  /jobs/62844e2ac4eb3f5c2e5a2658:
+
+    delete:
+
+      tags:
+
+      - Jobs
+
+      summary: Delete A Job
+
+      operationId: DeleteAJob
+
+      parameters: []
+
+      responses:
+
+        '200':
+
+          description: ''
+
+          headers: {}
+
+      deprecated: false
+
+      security:
+
+      - bearer: []
+
+components:
+
+  schemas:
+
+    CreateUserRequest:
+
+      title: CreateUserRequest
+
+      required:
+
+      - name
+
+      - email
+
+      - password
+
+      type: object
+
+      properties:
+
+        name:
+
+          type: string
+
+        email:
+
+          type: string
+
+        password:
+
+          type: string
+
+      example:
+
+        name: peter
+
+        email: peter@yahoo.com
+
+        password: peter123
+
+    LoginUserRequest:
+
+      title: LoginUserRequest
+
+      required:
+
+      - email
+
+      - password
+
+      type: object
+
+      properties:
+
+        email:
+
+          type: string
+
+        password:
+
+          type: string
+
+      example:
+
+        email: name123@g.com
+
+        password: name123
+
+    CreateJobRequest:
+
+      title: CreateJobRequest
+
+      required:
+
+      - company
+
+      - position
+
+      type: object
+
+      properties:
+
+        company:
+
+          type: string
+
+        position:
+
+          type: string
+
+      example:
+
+        company: peter 2
+
+        position: peter 2
+
+    UpdateAJobRequest:
+
+      title: UpdateAJobRequest
+
+      required:
+
+      - company
+
+      type: object
+
+      properties:
+
+        company:
+
+          type: string
+
+      example:
+
+        company: peter 3 after patch
+
+  securitySchemes:
+
+    bearer:
+
+      type: http
+
+      scheme: bearer
+
+security: []
+
+tags:
+
+- name: Misc
+
+  description: ''
+
+- name: Auth
+
+  description: ''
+
+- name: Jobs
+
+  description: ''
