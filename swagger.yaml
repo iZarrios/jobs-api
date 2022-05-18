@@ -10,7 +10,7 @@ info:
 
 servers:
 
-- url: https://jobs-api-heroku-06.herokuapp.com/
+- url: https://jobs-api-heroku-06.herokuapp.com/api/v1/
 
   variables: {}
 
