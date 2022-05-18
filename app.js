@@ -17,7 +17,7 @@ import notFoundErrorMiddleware from './middleware/not-found.js';
 import errorHandlerMiddleware from './middleware/error-handler.js';
 import autheticateUserMiddleware from './middleware/authentication.js';
 // Swagger
-import swagegrUI from 'swagger-ui-express';
+import swaggerUI from 'swagger-ui-express';
 import YAML from 'yamljs';
 
 //enivorment variables
@@ -53,7 +53,7 @@ const startServer = async() => {
 };
 
 const swaggerDoc = YAML.load('./swagger.yaml');
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 //routing
 app.get('/', (req, res) => {
     res.send('<h1>Jobs API</h1><a href="/api-docs">Documentation</a>');
