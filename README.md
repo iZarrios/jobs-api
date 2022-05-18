@@ -6,13 +6,16 @@ This is a jobs API using **Express, MongoDB and NodeJS** as well as other useful
 
 - install all project dependencies with `npm install`
 - start the development server with `npm start` OR `yarn start`
+- you need to have a .env file with the following variables `MONGO_URI,JWT_SECRET`
 
 ## Project Tree Structure
 ```bash
    ├── app.js  
    ├── package-lock.json  
    ├── package.json
+   ├── Procfile
    ├── README.md
+   ├── swagger.yaml
    ├── controllers
    │   ├── auth.js
    │   └── jobs.js
