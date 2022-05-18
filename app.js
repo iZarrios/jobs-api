@@ -2,6 +2,11 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import 'express-async-errors';
+//security packages
+import cors from 'cors';
+import helmet from 'helmet';
+import xss from 'xss-clean';
+import rateLimiter from 'express-rate-limit';
 
 //local
 import connectDB from './db/connect.js';
@@ -20,24 +25,34 @@ const port = process.env.PORT || 3000;
 const app = express();
 
 //json parsing
+app.set('trust proxy', 1);
+app.use(
+	rateLimiter({
+		windowMs: 15 * 60 * 1000, // 15 minutes
+		max: 1000, // 100 request per 15 minutes
+	})
+);
+
 app.use(express.json());
+app.use(cors());
+app.use(helmet());
+app.use(xss());
+
+const startServer = async () => {
+	try {
+		await connectDB(MONGO_URI);
+		app.listen(port, () => {
+			console.log(`connected to http://localhost:${port}`);
+		});
+	} catch (error) {
+		console.log(error);
+	}
+};
 
 //routing
 app.get('/', (req, res) => {
-    res.send('<h1>Jobs API</h1><a href="/api-docs">Documentation</a>');
+	res.send('<h1>Jobs API</h1><a href="/api-docs">Documentation</a>');
 });
-
-const startServer = async() => {
-    try {
-        await connectDB(MONGO_URI);
-        app.listen(port, () => {
-            console.log(`connected to http://localhost:${port}`);
-        });
-    } catch (error) {
-        console.log(error);
-    }
-};
-
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/jobs/', autheticateUserMiddleware, jobRouter);
 
